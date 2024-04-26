@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -226,7 +225,6 @@ public class UsersControllerTest {
         mockMvc.perform(patch(BASIC_URL + "/1")
                         .content(mapper.writeValueAsString(container))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors.[0].detail").value("At least one field out of the following list should be present: 'email', 'firstName', 'lastName', 'birthDate', 'address', 'phoneNumber'"))
                 .andExpect(jsonPath("$.errors.[0].statusCode").value("400"));
@@ -244,7 +242,6 @@ public class UsersControllerTest {
         mockMvc.perform(patch(BASIC_URL + "/1")
                         .content(mapper.writeValueAsString(container))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isMethodNotAllowed())
                 .andExpect(jsonPath("$.errors.detail").value("Request body contains all user fields. Use endpoint with PUT method"))
                 .andExpect(jsonPath("$.errors.statusCode").value("405"));
