@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserStorage {
+public class UsersStorage {
 
     private final List<Users> userList = new ArrayList<>();
     private Long userIdCounter = 1L;

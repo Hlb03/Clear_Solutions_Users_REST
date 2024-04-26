@@ -21,10 +21,20 @@ public class UsersValidationUtil {
     }
 
     public static void validatePartialUserData(UserInfoDTO user) {
-        checkAllFieldsPresence(user);
+        checkAllFieldsPresenceForPartialUpdate(user);
 
         List<ErrorDescription> errorDescriptions = new ArrayList<>();
         checkAllFieldsAbsence(user, errorDescriptions);
+
+        validateEmailAgainstPattern(user, errorDescriptions);
+        validateBirthDateAgainstCurrentDate(user, errorDescriptions);
+
+        throwExceptionIfRequired(errorDescriptions);
+    }
+
+    public static void validateAllUserData(UserInfoDTO user) {
+        List<ErrorDescription> errorDescriptions = new ArrayList<>();
+        checkAllFieldsPresence(user, errorDescriptions);
 
         validateEmailAgainstPattern(user, errorDescriptions);
         validateBirthDateAgainstCurrentDate(user, errorDescriptions);
@@ -40,6 +50,15 @@ public class UsersValidationUtil {
     private static void validateInputForPatterns(UserInfoDTO user, List<ErrorDescription> errorDescriptions) {
         validateEmailAgainstPattern(user, errorDescriptions);
         validateBirthDateAgainstCurrentDate(user, errorDescriptions);
+    }
+
+    private static void checkAllFieldsPresence(UserInfoDTO user, List<ErrorDescription> errorDescriptions) {
+        if (user.address() == null)
+            errorDescriptions.add(createErrorResponse("'address' field should be present"));
+        if (user.phoneNumber() == null)
+            errorDescriptions.add(createErrorResponse("'phoneNumber' field should be present"));
+
+        checkRequiredFieldsPresence(user, errorDescriptions);
     }
 
     private static void checkRequiredFieldsPresence(UserInfoDTO user, List<ErrorDescription> errorDescriptions) {
@@ -62,7 +81,7 @@ public class UsersValidationUtil {
             );
     }
 
-    private static void checkAllFieldsPresence(UserInfoDTO user) {
+    private static void checkAllFieldsPresenceForPartialUpdate(UserInfoDTO user) {
         if (user.email() != null && user.firstName() != null && user.lastName() != null &&
                 user.birthDate() != null && user.address() != null && user.phoneNumber() != null)
             throw new IncorrectRequestException("Request body contains all user fields. Use endpoint with PUT method");

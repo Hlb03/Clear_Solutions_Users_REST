@@ -7,7 +7,7 @@ import com.clear.solutions.user_restful.exceptions.NotSupportedAgeException;
 import com.clear.solutions.user_restful.exceptions.UserNotFoundException;
 import com.clear.solutions.user_restful.mapper.UsersMapper;
 import com.clear.solutions.user_restful.service.UsersService;
-import com.clear.solutions.user_restful.storage.UserStorage;
+import com.clear.solutions.user_restful.storage.UsersStorage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class UsersServiceImpl implements UsersService {
 
-    public UsersServiceImpl(UserStorage userStorage, UsersMapper usersMapper) {
+    public UsersServiceImpl(UsersStorage userStorage, UsersMapper usersMapper) {
         this.userStorage = userStorage;
         this.usersMapper = usersMapper;
     }
 
-    private final UserStorage userStorage;
+    private final UsersStorage userStorage;
     private final UsersMapper usersMapper;
 
     @Value("${user.minimal.age}")

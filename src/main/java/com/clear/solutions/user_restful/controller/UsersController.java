@@ -15,8 +15,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.clear.solutions.user_restful.util.UsersValidationUtil.validatePartialUserData;
-import static com.clear.solutions.user_restful.util.UsersValidationUtil.validateUserData;
+import static com.clear.solutions.user_restful.util.UsersValidationUtil.*;
 import static com.clear.solutions.user_restful.util.ValidateDataContainer.validateDataContainer;
 
 @Controller
@@ -61,7 +60,7 @@ public class UsersController {
     @PutMapping("/{userId}")
     public ResponseEntity<Void> fullUserUpdate(@PathVariable Long userId, @RequestBody DataContainerDTO<UserInfoDTO> userInfo) {
         validateDataContainer(userInfo);
-        validateUserData(userInfo.data());
+        validateAllUserData(userInfo.data());
 
         usersService.updateAllUserData(userId, userInfo.data());
         return ResponseEntity.ok().build();
