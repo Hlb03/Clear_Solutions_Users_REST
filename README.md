@@ -23,8 +23,10 @@ ___
 
 All well-worked and error responses are wrapped in extra fields.
 * Worked-well response example:
+
   ![well-worker.png](well-worked.png)
 * Error response example:
+
   ![error-response.png](error-response.png)
 
 ___
